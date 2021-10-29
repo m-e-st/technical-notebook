@@ -5,26 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title or metadata.title }}</title>
     <meta name="description" content="{{ description or metadata.description }}">
+    {% if metadata.useTailwind %}
+    <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}">
+    <link rel="stylesheet" href="{{ '/css/global.css' | url }}">
+    {% else %}
     <link rel="stylesheet" href="{{ '/css/index.css' | url }}">
+    {% endif %}
     <link rel="stylesheet" href="{{ '/css/prism-base16-monokai.dark.css' | url }}">
     <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
     <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
   </head>
   <body>
     <header>
-      <h1 class="home"><a href="{{ '/' | url }}">{{ metadata.title }}</a></h1>
+<!--      <h1 class="home"><a href="{{ '/' | url }}">{{ metadata.title }}</a></h1>
 
       {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
+      
+      
       <ul class="nav">
       {%- for entry in collections.all | eleventyNavigation %}
-        <li class="nav-item{% if entry.url == page.url %} nav-item-active{% endif %}"><a href="{{ entry.url | url }}">{{ entry.title }}</a></li>
+        <li class="nav-item{% if entry.url == page.url %} navitem-active{% endif %}"><a href="{{ entry.url | url }}">{{ entry.title }}</a></li>
       {%- endfor %}
       </ul>
+      -->
+      <nav class="bg-white shadow-lg">
+		<div class="max-w-6xl px-4">
+			<div class="flex justify-between">
+				<div class="flex space-x-7 my-2">
+					<!-- Website Logo -->
+					<div>
+						<a href="#" class="items-left py-2 px-2">
+							<img src="/img/logo.png" alt="Logo" class="h- w-8 mr-4 float-left" />
+
+						</a>
+					</div>
+					<!-- Primary Navbar items -->
+							<span class="py-2 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-900"
+								><a href="{{ '/' | url }}">{{ metadata.title }}</a></span
+							>					<div class="hidden md:flex items-center space-x-1">
+					  {%- for entry in collections.all | eleventyNavigation %}
+						<span class="navitem{% if entry.url == page.url %} navitem-active{% endif %}">
+						<a class="py-2 px-2 text-red-500 font-semibold hover:text-green-500 transition duration-900" href="{{ entry.url | url }}">{{ entry.title }}</a></span>
+					  {%- endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+	
     </header>
 
     <main{% if templateClass %} class="{{ templateClass }}"{% endif %}>
 
-      <!-- Delete this message -->
+      <!-- Delete this message **>
       <div class="warning">
         <ol>
           <li>Edit the <code>_data/metadata.json</code> with your blog’s information.</li>
@@ -33,7 +66,7 @@
         </ol>
         <p><em>This is an <a href="https://www.11ty.dev/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p>
       </div>
-      <!-- Stop deleting -->
+      <*** Stop deleting -->
 
       {{ content | safe }}
     </main>
